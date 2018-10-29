@@ -2,12 +2,12 @@
 DROP TABLE account_types 		CASCADE CONSTRAINTS;
 DROP TABLE specialities 		CASCADE CONSTRAINTS;
 drop table accounts 			CASCADE CONSTRAINTS;
-drop table personal_details 		CASCADE CONSTRAINTS;
-drop table doctors 			CASCADE CONSTRAINTS;
+drop table personal_details 	CASCADE CONSTRAINTS;
+drop table doctors 				CASCADE CONSTRAINTS;
 drop table patients 			CASCADE CONSTRAINTS;
 drop TABLE schedules 			CASCADE CONSTRAINTS;
-drop TABLE visits 			CASCADE CONSTRAINTS;
-drop table doctor_specialities		CASCADE CONSTRAINTS;
+drop TABLE visits 				CASCADE CONSTRAINTS;
+drop table doctor_specialities	CASCADE CONSTRAINTS;
 
 DROP SEQUENCE account_types_id_seq;
 DROP SEQUENCE speciality_id_seq;
@@ -21,7 +21,7 @@ DROP SEQUENCE visits_id_seq;
 -- create tables
 create table account_types (
 	account_type_id 	INTEGER 	PRIMARY KEY,
-	type			VARCHAR(32)	UNIQUE NOT NULL
+	type				VARCHAR(32)	UNIQUE NOT NULL
 );
 
 CREATE SEQUENCE account_types_id_seq START WITH 1;
@@ -37,7 +37,7 @@ END;
 
 create table specialities (
 	speciality_id		INTEGER 	PRIMARY KEY,
-	name			VARCHAR(64)	UNIQUE NOT NULL
+	name				VARCHAR(64)	UNIQUE NOT NULL
 );
 CREATE SEQUENCE speciality_id_seq START WITH 1;
 CREATE OR REPLACE TRIGGER trg_speciality_id 
@@ -159,19 +159,15 @@ BEFORE INSERT ON visits
 FOR EACH ROW
 BEGIN
   SELECT visits_id_seq.NEXTVAL
-  INTO   :new.visit_id;
+  INTO   :new.visit_id
   FROM   dual;
 END;
--- insert data
 
+-- insert data
 
 INSERT INTO account_types (type) VALUES ('ADMIN');
 INSERT INTO account_types (type) VALUES ('DOCTOR');
 INSERT INTO account_types (type) VALUES ('PATIENT');
-
-INSERT INTO visits (start_date, end_date, schedule, patient, reason) VALUES ('2018-11-01 08:00:00', '2018-11-01 08:30:00', 1, 1, 'Diagnoza');
-INSERT INTO visits (start_date, end_date, schedule, patient, reason) VALUES ('2018-11-02 08:00:00', '2018-11-02 08:30:00', 1, 2, 'Konsultacje');
-INSERT INTO visits (start_date, end_date, schedule, patient, reason) VALUES ('2018-11-03 08:00:00', '2018-11-03 08:30:00', 1, 2, 'Przepisanie recepty');
 
 INSERT INTO specialities (name) VALUES ('alergologia');
 INSERT INTO specialities (name) VALUES ('anestezjologia');
@@ -239,14 +235,17 @@ INSERT INTO patients (account) VALUES (4);
 INSERT INTO patients (account) VALUES (5);
 
 
-INSERT INTO schedules (start_date, end_date, doctor) VALUES ('2018-11-01 08:00:00', '2018-11-01 16:00:00', 1);
-INSERT INTO schedules (start_date, end_date, doctor) VALUES ('2018-11-02 08:00:00', '2018-11-02 16:00:00', 1);
-INSERT INTO schedules (start_date, end_date, doctor) VALUES ('2018-11-03 08:00:00', '2018-11-03 16:00:00', 1);
-INSERT INTO schedules (start_date, end_date, doctor) VALUES ('2018-11-01 08:00:00', '2018-11-01 16:00:00', 2);
-INSERT INTO schedules (start_date, end_date, doctor) VALUES ('2018-11-02 08:00:00', '2018-11-02 16:00:00', 2);
-INSERT INTO schedules (start_date, end_date, doctor) VALUES ('2018-11-03 08:00:00', '2018-11-03 16:00:00', 2);
+INSERT INTO schedules (start_date, end_date, doctor) VALUES (TO_TIMESTAMP('2018-11-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-11-01 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
+INSERT INTO schedules (start_date, end_date, doctor) VALUES (TO_TIMESTAMP('2018-11-02 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-11-02 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
+INSERT INTO schedules (start_date, end_date, doctor) VALUES (TO_TIMESTAMP('2018-11-03 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-11-03 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
+INSERT INTO schedules (start_date, end_date, doctor) VALUES (TO_TIMESTAMP('2018-11-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-11-01 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2);
+INSERT INTO schedules (start_date, end_date, doctor) VALUES (TO_TIMESTAMP('2018-11-02 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-11-02 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2);
+INSERT INTO schedules (start_date, end_date, doctor) VALUES (TO_TIMESTAMP('2018-11-03 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-11-03 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2);
 
+INSERT INTO visits (start_date, end_date, schedule, patient, reason) VALUES (TO_TIMESTAMP('2018-11-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-11-01 08:30:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1, 'Diagnoza');
+INSERT INTO visits (start_date, end_date, schedule, patient, reason) VALUES (TO_TIMESTAMP('2018-11-02 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-11-02 08:30:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 2, 'Konsultacje');
+INSERT INTO visits (start_date, end_date, schedule, patient, reason) VALUES (TO_TIMESTAMP('2018-11-03 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-11-03 08:30:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 2, 'Przepisanie recepty');
 
-INSERT INTO visits (start_date, end_date, schedule, patient, reason) VALUES ('2018-11-01 10:00:00', '2018-11-01 10:30:00', 2, 2, 'Diagnoza');
-INSERT INTO visits (start_date, end_date, schedule, patient, reason) VALUES ('2018-11-02 10:00:00', '2018-11-02 10:30:00', 2, 3, 'Konsultacje');
-INSERT INTO visits (start_date, end_date, schedule, patient, reason) VALUES ('2018-11-02 10:00:00', '2018-11-02 10:30:00', 2, 3, 'Przepisanie recepty');
+INSERT INTO visits (start_date, end_date, schedule, patient, reason) VALUES (TO_TIMESTAMP('2018-11-01 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-11-01 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2, 'Diagnoza');
+INSERT INTO visits (start_date, end_date, schedule, patient, reason) VALUES (TO_TIMESTAMP('2018-11-02 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-11-02 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 3, 'Konsultacje');
+INSERT INTO visits (start_date, end_date, schedule, patient, reason) VALUES (TO_TIMESTAMP('2018-11-02 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2018-11-02 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 3, 'Przepisanie recepty');
