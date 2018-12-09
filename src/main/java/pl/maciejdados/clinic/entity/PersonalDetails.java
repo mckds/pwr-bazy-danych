@@ -20,5 +20,5 @@ public class PersonalDetails {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "clinic_user_id")
-    private ClinicUser user;
+    private Account user;
 }

@@ -7,12 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.maciejdados.clinic.entity.ClinicUser;
+import pl.maciejdados.clinic.entity.Account;
 import pl.maciejdados.clinic.repository.ClinicUserRepository;
-import pl.maciejdados.clinic.service.ClinicUserService;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -30,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        ClinicUser user = userRepository
+        Account user = userRepository
                 .findByEmail(s)
                 .orElseThrow(() -> new UsernameNotFoundException(s));
 

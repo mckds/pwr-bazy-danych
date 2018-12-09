@@ -3,7 +3,7 @@ package pl.maciejdados.clinic.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.maciejdados.clinic.entity.ClinicUser;
+import pl.maciejdados.clinic.entity.Account;
 import pl.maciejdados.clinic.repository.AccountTypeRepository;
 import pl.maciejdados.clinic.repository.ClinicUserRepository;
 
@@ -22,18 +22,20 @@ public class ClinicUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public ClinicUser findUserByEmail(String email) {
+    public Account findUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found: " + email));
     }
 
-    public void save(ClinicUser user) {
+    public Account save(Account user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        user.setAccountType(accountTypeRepository
-                .findByType("ROLE_PATIENT")
-                .orElseThrow(() -> new RuntimeException("Patient role not found")));
+        if(user.getAccountType() == null) {
+            user.setAccountType(accountTypeRepository
+                    .findByType("ROLE_PATIENT")
+                    .orElseThrow(() -> new RuntimeException("Patient role not found")));
+        }
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 }

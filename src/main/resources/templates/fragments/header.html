@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link href="../../static/css/style.css" th:href="@{static/css/style.css}" />
+</head>
+<body>
+<div th:fragment="header">
+    <div sec:authorize="isAuthenticated()">
+        <p>Welcome <span sec:authentication="name">Name</span></p>
+
+        <!-- Patient -->
+        <ul class="navbar" sec:authorize="hasRole('ROLE_PATIENT')">
+            <li>Sign for a visit</li>
+            <li>My visits</li>
+        </ul>
+
+        <!-- Doctor -->
+        <ul sec:authorize="hasRole('ROLE_DOCTOR')">
+            <li>My schedules</li>
+        </ul>
+
+        <!-- Office employee -->
+        <ul sec:authorize="hasRole('ROLE_OFFICE_EMPLOYEE')">
+            <li>Doctors</li>
+        </ul>
+
+        <!-- All -->
+        <ul>
+            <li><a href="/logout" th:href="@{/logout}">Sign out</a></li>
+        </ul>
+    </div>
+
+    <div sec:authorize="!isAuthenticated()">
+        <ul>
+            <li><a href="/signin" th:href="@{/signin}">Sign in</a></li>
+            <li><a href="/signup" th:href="@{/signup}">Sign up</a></li>
+        </ul>
+    </div>
+    <hr />
+</div>
+
+</body>
+</html>

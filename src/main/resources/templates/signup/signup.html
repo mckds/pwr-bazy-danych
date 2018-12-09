@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+</head>
+<body>
+    <form method="post" th:action="@{/signup}" th:object="${signupDto}">
+        <th:block th:if="${#fields.hasErrors('${signupDto.*}')}">
+            <div>
+                Form has errors, please try again.
+            </div>
+        </th:block>
+        Email: <input type="text" id="email" th:field="*{email}" /> <br />
+        <div th:if="${#fields.hasErrors('email')}">Incorrect email</div>
+
+        Password: <input type="password" id="password" th:field="*{password}" /> <br />
+        <div th:if="${#fields.hasErrors('password')}">Incorrect password</div>
+
+
+        First name: <input type="text" id="firstName" th:field="*{firstName}" /><br />
+        <div th:if="${#fields.hasErrors('firstName')}">Incorrect first name</div>
+
+
+        Last name: <input type="text" id="lastName" th:field="*{lastName}" /><br />
+        <div th:if="${#fields.hasErrors('lastName')}">Incorrect last name</div>
+
+
+        National number: <input type="text" id="nationalNumber" th:field="*{nationalNumber}" /><br />
+        <div th:if="${#fields.hasErrors('nationalNumber')}">Incorrect national number</div>
+
+
+        Birth date: <input type="text" id="birthDate" th:field="*{birthDate}" /><br />
+        <div th:if="${#fields.hasErrors('birthDate')}">Incorrect birth date</div>
+
+        <button type="submit">Sign up</button>
+        <a href="/" th:href="@{/}">Home</a>
+
+    </form>
+</body>
+</html>

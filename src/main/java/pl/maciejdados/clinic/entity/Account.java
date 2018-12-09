@@ -6,10 +6,10 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class ClinicUser {
+public class Account {
     @Id
     @GeneratedValue
-    private Long clinicUserId;
+    private Long id;
 
     private String email;
     private String password;
